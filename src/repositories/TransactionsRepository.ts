@@ -25,12 +25,10 @@ class TransactionsRepository {
 
   public getBalance(): Balance {
     const { income, outcome } = this.transactions.reduce(
-      (amount, { type, value }) => {
-        // eslint-disable-next-line
-        amount[type] += value;
-
-        return amount;
-      },
+      (amount, { type, value }) => ({
+        ...amount,
+        [type]: amount[type] + value,
+      }),
       {
         income: 0,
         outcome: 0,
